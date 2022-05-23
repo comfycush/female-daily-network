@@ -12,5 +12,5 @@ To run the app, please run the code below:
 
 ```bash
 # development
-$ yarn start
+$ npm start
 ```
