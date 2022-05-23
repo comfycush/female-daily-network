@@ -1,5 +1,5 @@
 let reviewSlideIndex = 1;
-reviewShowSlides(reviewSlideIndex);
+reviewShowSlide(reviewSlideIndex);
 
 let trendingSlideIndex = 1;
 trendingShowSlide(trendingSlideIndex);
@@ -7,14 +7,14 @@ trendingShowSlide(trendingSlideIndex);
 /* ----- Review ----- */
 
 function reviewPlusSlide(n) {
-  reviewShowSlides((reviewSlideIndex += n));
+  reviewShowSlide((reviewSlideIndex += n));
 }
 
 function reviewCurrentSlide(n) {
-  reviewShowSlides((reviewSlideIndex = n));
+  reviewShowSlide((reviewSlideIndex = n));
 }
 
-function reviewShowSlides(n) {
+function reviewShowSlide(n) {
   let i;
   let slides = document.getElementsByClassName("review-slide");
   let dots = document.getElementsByClassName("review-carousel-indicator");
@@ -67,7 +67,7 @@ function reviewShowSlides(n) {
 
 /* ----- Trending ----- */
 
-function trendingPlusSlides(n) {
+function trendingPlusSlide(n) {
   trendingShowSlide((trendingSlideIndex += n));
 }
 
@@ -76,7 +76,6 @@ function trendingCurrentSlide(n) {
 }
 
 function trendingShowSlide(n) {
-  console.log("trendingSlideIndex", trendingSlideIndex);
   let i;
   let slides = document.getElementsByClassName("trending-slide");
   let dots = document.getElementsByClassName("trending-carousel-indicator");
@@ -97,13 +96,12 @@ function trendingShowSlide(n) {
     slides[i].style.display = "none";
   }
   for (i = 0; i < dots.length; i++) {
-    console.log(dots[i].className, "line100");
     dots[i].className = dots[i].className.replace(" active", "");
   }
 
   if (trendingSlideIndex !== 1 && !leftArrow.className.includes("active")) {
     leftArrow.className += " active";
-    leftArrow.setAttribute("onclick", "trendingPlusSlides(-1)");
+    leftArrow.setAttribute("onclick", "trendingPlusSlide(-1)");
   }
 
   if (trendingSlideIndex === 1) {
@@ -116,7 +114,7 @@ function trendingShowSlide(n) {
     !rightArrow.className.includes("active")
   ) {
     rightArrow.className += " active";
-    rightArrow.setAttribute("onclick", "trendingPlusSlides(1)");
+    rightArrow.setAttribute("onclick", "trendingPlusSlide(1)");
   }
 
   if (trendingSlideIndex === slides.length) {
