@@ -42,7 +42,6 @@ const CarouselControl = ({
   currentSlide,
   ...props
 }) => {
-  // console.log("currentSlide", currentSlide);
   return (
     <Wrapper>
       <Button

@@ -24,7 +24,6 @@ export const createEpic =
     return action$.pipe(
       ofType(action.request().type),
       switchMap(({ payload }) => {
-        console.log("Call APi", services[service][method]());
         return services[service][method](
           payload,
           auth ? getAuthToken(state$) : ""
@@ -37,78 +36,3 @@ export const createEpic =
       })
     );
   };
-
-// export const createDownloadEpic = (
-//   action,
-//   service,
-//   method,
-//   auth = false,
-//   filename
-// ) => (action$, state$, services) =>
-//   action$.pipe(
-//     ofType(action.request().type),
-//     switchMap(({ payload }) =>
-//       services[service][method](
-//         payload,
-//         auth ? getAuthToken(state$) : ''
-//       )
-//         .then(
-//           (res) => {
-//             fileDownload(res.data, `${filename}.xlsx`);
-//             return action.success(res);
-//           }
-//           // catchError(({ response }) => of(action.failure(response)))
-//         )
-//         .catch((err) => of(action.failure(err)))
-//     )
-//   );
-
-// export const createDownloadAsZipEpic = (
-//   action,
-//   service,
-//   method,
-//   auth = false,
-//   filename
-// ) => (action$, state$, services) =>
-//   action$.pipe(
-//     ofType(action.request().type),
-//     switchMap(({ payload }) =>
-//       services[service][method](
-//         payload,
-//         auth ? getAuthToken(state$) : ''
-//       )
-//         .then(
-//           (res) => {
-//             fileDownload(res.data, `${filename}.zip`);
-//             return action.success(res);
-//           }
-//           // catchError(({ response }) => of(action.failure(response)))
-//         )
-//         .catch((err) => of(action.failure(err)))
-//     )
-//   );
-
-// export const createDownloadAsCSVEpic = (
-//   action,
-//   service,
-//   method,
-//   auth = false,
-//   filename
-// ) => (action$, state$, services) =>
-//   action$.pipe(
-//     ofType(action.request().type),
-//     switchMap(({ payload }) =>
-//       services[service][method](
-//         payload,
-//         auth ? getAuthToken(state$) : ''
-//       )
-//         .then(
-//           (res) => {
-//             fileDownload(res.data, `${filename}.csv`);
-//             return action.success(res);
-//           }
-//           // catchError(({ response }) => of(action.failure(response)))
-//         )
-//         .catch((err) => of(action.failure(err)))
-//     )
-//   );

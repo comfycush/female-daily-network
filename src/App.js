@@ -52,10 +52,7 @@ import PreFooter from "./components/PreFooter/PreFooter";
 import Footer from "./components/Footer/Footer";
 import { useDispatch, useSelector } from "react-redux";
 import { getDataAsync } from "./store/data/dataActions";
-// import PrevArrow from "./components/PrevArrow/PrevArrow";
-// import NextArrow from "./components/NextArrow/NextArrow";
 import CarouselControl from "./components/CarouselControl/CarouselControl";
-import { calculateTotalDots } from "./utils/utils";
 
 const videoSources = [
   {
@@ -116,10 +113,6 @@ function App() {
   useEffect(() => {
     dispatch(getDataAsync.request());
   }, [dispatch]);
-
-  useEffect(() => {
-    console.log("trendingCurrentSlide", trendingCurrentSlide);
-  }, [trendingCurrentSlide]);
 
   const { nav1, nav2 } = state;
 

@@ -35,6 +35,5 @@ export const api = (
     options["headers"]["Content-Type"] = "application/json";
     options["headers"]["Access-Control-Allow-Origin"] = "*";
   }
-  console.log("In Api", method);
   return ajax(options);
 };
