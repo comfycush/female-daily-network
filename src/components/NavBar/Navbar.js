@@ -89,7 +89,7 @@ const Navbar = () => {
           </a>
           <SearchBarContainer>
             <button>
-              <SearchIcon className="fa-solid fa-magnifying-glass"></SearchIcon>
+              <SearchIcon className="fas fa-search"></SearchIcon>
             </button>
             <SearchInput
               type={"text"}
