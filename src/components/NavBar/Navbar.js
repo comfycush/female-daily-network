@@ -37,7 +37,7 @@ const SearchInput = styled.input`
 `;
 const LoginSignUpButton = styled.button`
   display: flex;
-  background-color: /#da254e;
+  background-color: #da254e;
   height: 100%;
   width: 220px;
 
@@ -82,14 +82,14 @@ const Navbar = () => {
       <UpperNav>
         <HeaderLeft>
           <button>
-            <i className="fa-solid fa-bars fa-xl"></i>
+            <i className="fas fa-bars fa-lg"></i>
           </button>
           <a href="/#">
             <NavBrandImg src={logo} />
           </a>
           <SearchBarContainer>
             <button>
-              <SearchIcon classNameName="fa-solid fa-magnifying-glass"></SearchIcon>
+              <SearchIcon className="fa-solid fa-magnifying-glass"></SearchIcon>
             </button>
             <SearchInput
               type={"text"}
@@ -98,7 +98,7 @@ const Navbar = () => {
           </SearchBarContainer>
         </HeaderLeft>
         <LoginSignUpButton>
-          <UserIcon classNameName="fa-solid fa-user"></UserIcon>
+          <UserIcon className="fas fa-user"></UserIcon>
           Login / Signup
         </LoginSignUpButton>
       </UpperNav>

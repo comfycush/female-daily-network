@@ -23,7 +23,6 @@ import {
   MyyMatchesTitle,
   PopularGroupsCards,
   Section,
-  TrendingCards,
   TrendingCardSliderWrapper,
   VideoGrid,
 } from "./styled/shared/styles";
@@ -40,7 +39,7 @@ import PopularGroupCard from "./components/PopularGroupCard/PopularGroupCard";
 import avatar10 from "./assets/images/avatars/10.jpeg";
 import avatar9 from "./assets/images/avatars/9.jpeg";
 import avatar8 from "./assets/images/avatars/8.jpg";
-import avatar6 from "./assets/images/avatars/6.jpg";
+import avatar11 from "./assets/images/avatars/11.jpeg";
 import VideoItem from "./components/VideoItem/VideoItem";
 import TrendingCard from "./components/TrendingCard/TrendingCard";
 import niveaLogo from "./assets/images/brands/nivea.png";
@@ -53,8 +52,10 @@ import PreFooter from "./components/PreFooter/PreFooter";
 import Footer from "./components/Footer/Footer";
 import { useDispatch, useSelector } from "react-redux";
 import { getDataAsync } from "./store/data/dataActions";
-import PrevArrow from "./components/PrevArrow/PrevArrow";
-import NextArrow from "./components/NextArrow/NextArrow";
+// import PrevArrow from "./components/PrevArrow/PrevArrow";
+// import NextArrow from "./components/NextArrow/NextArrow";
+import CarouselControl from "./components/CarouselControl/CarouselControl";
+import { calculateTotalDots } from "./utils/utils";
 
 const videoSources = [
   {
@@ -79,54 +80,89 @@ function App() {
     nav1: null,
     nav2: null,
   });
+  const [reviewCurrentSlide, setReviewCurrentSlide] = useState(0);
+  const [trendingCurrentSlide, setTrendingCurrentSlide] = useState(0);
 
-  const slider1 = useRef();
-  const slider2 = useRef();
-
-  useEffect(() => {
-    setState({
-      nav1: slider1.current,
-      nav2: slider2.current,
-    });
-    dispatch(getDataAsync.request());
-  }, [dispatch]);
-
-  const { nav1, nav2 } = state;
-
-  const nextReview = () => {
-    slider1.current.slickNext();
-  };
-  const previousReview = () => {
-    slider1.current.slickPrev();
-  };
-
-  const nextTrending = () => {
-    slider2.current.slickNext();
-  };
-  const previousTrending = () => {
-    slider2.current.slickPrev();
-  };
+  const trendingCardMultiplier = 13;
 
   const latestReviewSliderSettings = {
     slidesToShow: 2,
     infinite: false,
     dots: false,
     arrows: false,
-    appendDots: (dots) => <ul>{dots}</ul>,
-    customPaging: (i) => <i class="fas fa-circle fa-xs"></i>,
-    prevArrow: <PrevArrow handleOnClick={previousReview} />,
-    nextArrow: <NextArrow handleOnClick={nextReview} />,
+    swipe: false,
   };
 
   const trendingSliderSettings = {
-    slidesToShow: 5,
+    slidesToShow: 6,
     infinite: false,
     dots: false,
     arrows: false,
-    appendDots: (dots) => <ul>{dots}</ul>,
-    customPaging: (i) => <i class="fas fa-circle fa-xs"></i>,
-    prevArrow: <PrevArrow handleOnClick={previousTrending} />,
-    nextArrow: <NextArrow handleOnClick={nextTrending} />,
+    slidesToScroll: 6,
+    swipe: false,
+  };
+
+  const reviewSlider = useRef();
+  const trendingSlider = useRef();
+
+  useEffect(() => {
+    setState({
+      nav1: reviewSlider.current,
+      nav2: trendingSlider.current,
+    });
+  }, []);
+
+  // Fetch data
+  useEffect(() => {
+    dispatch(getDataAsync.request());
+  }, [dispatch]);
+
+  useEffect(() => {
+    console.log("trendingCurrentSlide", trendingCurrentSlide);
+  }, [trendingCurrentSlide]);
+
+  const { nav1, nav2 } = state;
+
+  const handleNextReview = () => {
+    if (!!latestReviewList && reviewCurrentSlide < latestReviewList.length) {
+      setReviewCurrentSlide(
+        reviewCurrentSlide + latestReviewSliderSettings.slidesToShow
+      );
+      reviewSlider.current.slickNext();
+    }
+  };
+  const handlePreviousReview = () => {
+    if (reviewCurrentSlide > 0) {
+      setReviewCurrentSlide(
+        reviewCurrentSlide - latestReviewSliderSettings.slidesToShow
+      );
+      reviewSlider.current.slickPrev();
+    }
+  };
+  const handleClickDotReview = (e) => {
+    setReviewCurrentSlide(e);
+    reviewSlider.current.slickGoTo(e);
+  };
+
+  const handleNextTrending = () => {
+    if (trendingCurrentSlide < trendingCardMultiplier - 1) {
+      setTrendingCurrentSlide(
+        trendingCurrentSlide + trendingSliderSettings.slidesToShow
+      );
+      trendingSlider.current.slickNext();
+    }
+  };
+  const handlePreviousTrending = () => {
+    if (trendingCurrentSlide > 0) {
+      setTrendingCurrentSlide(
+        trendingCurrentSlide - trendingSliderSettings.slidesToShow
+      );
+      trendingSlider.current.slickPrev();
+    }
+  };
+  const handleClickDotTrending = (e) => {
+    setTrendingCurrentSlide(e);
+    trendingSlider.current.slickGoTo(e);
   };
 
   return (
@@ -202,6 +238,7 @@ function App() {
           <Articles>
             {latestArticleList.map((v, i) => (
               <ArticleCard
+                key={i}
                 image={v.image}
                 author={v.author}
                 published_at={v.published_at}
@@ -226,10 +263,11 @@ function App() {
             <Slider
               {...latestReviewSliderSettings}
               asNavFor={nav1}
-              ref={(slider) => (slider1.current = slider)}
+              ref={(slider) => (reviewSlider.current = slider)}
             >
               {latestReviewList.map((v, i) => (
                 <ReviewCard
+                  key={i}
                   comment={v.comment}
                   productDesc={v.product ? v.product.desc : ""}
                   productImage={v.product ? v.product.image : ""}
@@ -240,6 +278,14 @@ function App() {
                 />
               ))}
             </Slider>
+            <CarouselControl
+              handleOnClickLeft={handlePreviousReview}
+              handleOnClickRight={handleNextReview}
+              slidesToShow={latestReviewSliderSettings.slidesToShow}
+              totalItems={latestReviewList.length}
+              handleOnClickDot={handleClickDotReview}
+              currentSlide={reviewCurrentSlide}
+            />
           </Section>
 
           <MR2Banner>
@@ -265,7 +311,7 @@ function App() {
             />
             <PopularGroupCard
               name={"Embrace the curl"}
-              img={avatar6}
+              img={avatar11}
               text="May our curls pop and never stop!"
             />
             <PopularGroupCard
@@ -308,17 +354,21 @@ function App() {
             <Slider
               {...trendingSliderSettings}
               asNavFor={nav2}
-              ref={(slider) => (slider2.current = slider)}
+              ref={(slider) => (trendingSlider.current = slider)}
             >
-              <TrendingCard score={4.9} />
-              <TrendingCard score={4.9} />
-              <TrendingCard score={4.9} />
-              <TrendingCard score={4.9} />
-              <TrendingCard score={4.9} />
-              <TrendingCard score={4.9} />
-              <TrendingCard score={4.9} />
+              {[...Array(trendingCardMultiplier)].map((_, i) => (
+                <TrendingCard score={4.9} key={i} />
+              ))}
             </Slider>
           </TrendingCardSliderWrapper>
+          <CarouselControl
+            handleOnClickLeft={handlePreviousTrending}
+            handleOnClickRight={handleNextTrending}
+            slidesToShow={6}
+            totalItems={13}
+            handleOnClickDot={handleClickDotTrending}
+            currentSlide={trendingCurrentSlide}
+          />
         </Section>
 
         {/* Top Brands */}

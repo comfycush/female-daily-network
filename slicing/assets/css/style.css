@@ -744,23 +744,20 @@ a:hover {
 }
 
 .trending-cards {
-  margin-left: 5px;
-  margin-right: 5px;
   margin-bottom: 30px;
   height: auto;
+  width: auto;
 }
 
 .trending-card {
   height: auto;
   float: left;
-  width: calc(100 / 6 * 100%);
   padding: 0 10px;
 }
 
 .trending-card__body {
   display: flex;
   flex-direction: column;
-  padding: 10px;
 }
 
 .trending-card__body__score-container {

@@ -174,14 +174,6 @@ export const VideoGrid = styled.div`
   grid-template-rows: repeat(2, 1fr);
   margin: 0;
 `;
-export const TrendingCards = styled.div`
-  display: flex;
-  flex: 1 1 1 1 1 1;
-
-  margin-left: 5px;
-  margin-right: 5px;
-  margin-bottom: 30px;
-`;
 export const BrandImages = styled.div`
   display: flex;
   justify-content: space-around;
@@ -204,5 +196,5 @@ export const BottomFrame = styled.div`
 `;
 export const TrendingCardSliderWrapper = styled.div`
   min-width: 80%;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
 `;

@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import React from "react";
-import avatar from "../../assets/images/avatars/1.jpg";
+import avatar from "../../assets/images/avatars/5.jpg";
 import { scoreToStar } from "../../utils/utils";
 
 const Wrapper = styled.div`
