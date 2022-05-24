@@ -60,12 +60,12 @@ const EditorChoiceCard = ({
   productName,
 }) => {
   return (
-    <div>
+    <div data-testid={`editor-choice-card`}>
       <CardHeader>
         <Avatar alt="avatar" src={avatar} />
         <TextWrapper>
-          <EditorName>{name}</EditorName>
-          <EditorRole>{role}</EditorRole>
+          <EditorName data-testid={`editor-name`}>{name}</EditorName>
+          <EditorRole data-testid={`editor-role`}>{role}</EditorRole>
         </TextWrapper>
       </CardHeader>
 
@@ -74,7 +74,7 @@ const EditorChoiceCard = ({
           <img src={productImage} alt="product" />
         </EditorChoiceImg>
         <ScoreContainer>
-          <Score>{score}</Score>
+          <Score data-testid={`product-score`}>{score}</Score>
           <ScoreStars>
             {[...Array(5)].map((_, i) => {
               return scoreToStar(i, score);
@@ -83,9 +83,11 @@ const EditorChoiceCard = ({
           <p>{"(7)"}</p>
         </ScoreContainer>
         <ProductDetail>
-          <ProductDetailBrand>{productName}</ProductDetailBrand>
+          <ProductDetailBrand data-testid={`product-name`}>
+            {productName}
+          </ProductDetailBrand>
           <ProductDetailName>
-            <p>{description}</p>
+            <p data-testid={`product-description`}>{description}</p>
           </ProductDetailName>
           <ProductDetailColor>
             <p>Rosy Beige</p>

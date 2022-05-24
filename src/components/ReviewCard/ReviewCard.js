@@ -95,19 +95,23 @@ const ReviewCard = ({
 }) => {
   function checkTruncateTestimonial(text) {
     if (text.length > 150) {
-      return `${text.substring(0, 150)}...`;
+      return `${text.substring(0, 50)}...`;
     } else {
       return text;
     }
   }
   return (
-    <Wrapper>
+    <Wrapper data-testid={`review-card`}>
       <Card>
         <CardHeader>
           <Img src={productImage} alt="product" />
           <CardDetail>
-            <CardDetailBrand>{productName}</CardDetailBrand>
-            <CardDetailName>{productDesc}</CardDetailName>
+            <CardDetailBrand data-testid={`product-name`}>
+              {productName}
+            </CardDetailBrand>
+            <CardDetailName data-testid={`product-desc`}>
+              {productDesc}
+            </CardDetailName>
           </CardDetail>
         </CardHeader>
         <CardBody>
@@ -119,13 +123,17 @@ const ReviewCard = ({
             </ScoreStars>
             <CreatedDate>2 hours ago</CreatedDate>
           </ScoreWrapper>
-          <Testimonial>{checkTruncateTestimonial(comment)}</Testimonial>
+          <Testimonial data-testid={`comment`}>
+            {checkTruncateTestimonial(comment)}
+          </Testimonial>
         </CardBody>
         <CardFooter>
           <CardFooterContainer>
             <Avatar src={avatar} alt="avatar" />
-            <ReviewerName>{user}</ReviewerName>
-            <ReviewerDetail>{profile.join(", ")}</ReviewerDetail>
+            <ReviewerName data-testid={`user`}>{user}</ReviewerName>
+            <ReviewerDetail data-testid={`profile`}>
+              {profile.join(", ")}
+            </ReviewerDetail>
           </CardFooterContainer>
         </CardFooter>
       </Card>
