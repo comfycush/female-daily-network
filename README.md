@@ -14,3 +14,7 @@ To run the app, please run the code below:
 # development
 $ npm start
 ```
+
+## UI Slicing
+
+The HTML file is located in `./slicing/index.html`
